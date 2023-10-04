@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
-
+import static java.awt.image.ImageObserver.HEIGHT;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Purvam Sheth
@@ -75,18 +78,43 @@ public class mainFrame extends javax.swing.JFrame {
         firstNameField.setBackground(new java.awt.Color(242, 98, 129));
         firstNameField.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         firstNameField.setForeground(new java.awt.Color(255, 255, 255));
+        firstNameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                firstNameFieldKeyReleased(evt);
+            }
+        });
 
         lastNameField.setBackground(new java.awt.Color(242, 98, 129));
         lastNameField.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         lastNameField.setForeground(new java.awt.Color(255, 255, 255));
+        lastNameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                lastNameFieldKeyReleased(evt);
+            }
+        });
 
         emailField.setBackground(new java.awt.Color(242, 98, 129));
         emailField.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         emailField.setForeground(new java.awt.Color(255, 255, 255));
+        emailField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailFieldFocusLost(evt);
+            }
+        });
 
         ageField.setBackground(new java.awt.Color(242, 98, 129));
         ageField.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         ageField.setForeground(new java.awt.Color(255, 255, 255));
+        ageField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ageFieldFocusLost(evt);
+            }
+        });
+        ageField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ageFieldKeyReleased(evt);
+            }
+        });
 
         messageField.setBackground(new java.awt.Color(242, 98, 129));
         messageField.setColumns(20);
@@ -194,6 +222,82 @@ public class mainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void firstNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameFieldKeyReleased
+        // TODO add your handling code here:
+         String Name = firstNameField.getText();
+        for (char c : Name.toCharArray()) {
+            System.out.println(c);
+            if (Character.isDigit(c)) {
+               firstNameField.setText("");
+               JOptionPane.showMessageDialog(this, "No Digits are allowded", "Enter Correct Name", HEIGHT);
+            }
+        }
+    }//GEN-LAST:event_firstNameFieldKeyReleased
+
+    private void lastNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lastNameFieldKeyReleased
+        // TODO add your handling code here:
+        String Name = lastNameField.getText();
+        for (char c : Name.toCharArray()) {
+            System.out.println(c);
+            if (Character.isDigit(c)) {
+               lastNameField.setText("");
+               JOptionPane.showMessageDialog(this, "No Digits are allowded", "Enter Correct Name", HEIGHT);
+            }
+        }
+    }//GEN-LAST:event_lastNameFieldKeyReleased
+
+    private void ageFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageFieldKeyReleased
+        // TODO add your handling code here:
+         String age = ageField.getText();
+        for (char c : age.toCharArray()) {
+            System.out.println(c);
+            if (!Character.isDigit(c)) {
+               ageField.setText("d");
+               JOptionPane.showMessageDialog(this, "Please Enter Digits Only", "Enter Correct Age", HEIGHT);
+            }
+        }
+    }//GEN-LAST:event_ageFieldKeyReleased
+
+    private void ageFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ageFieldFocusLost
+        // TODO add your handling code here:
+        String age = ageField.getText();
+        String d = "d";
+        int number;
+        if(age.equals(d)){
+            ageField.setText("");
+        }
+        if((age.length()>=1)){
+            if(age.equals(d)){
+                number=0;
+            }
+            else{
+                number = Integer.parseInt(age);
+            }
+            if((!(number >= 10 && number <= 99))){
+                System.out.println(age);
+                ageField.setText("");
+                if(!(age.equals(d))){
+                    JOptionPane.showMessageDialog(this, "Please Enter age between 10-99", "Enter Correct Age", HEIGHT);                 
+                }
+            }
+        }
+    }//GEN-LAST:event_ageFieldFocusLost
+
+    private void emailFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusLost
+        // TODO add your handling code here:
+        // TODO add your handling code here:        
+        String email = emailField.getText();
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if(!(email.length()==0)){
+            if(!(matcher.matches())){
+                emailField.setText("");
+                JOptionPane.showMessageDialog(this, "Please Enter Valid Email", "Enter Correct Email", HEIGHT);
+            }            
+        }
+    }//GEN-LAST:event_emailFieldFocusLost
 
     /**
      * @param args the command line arguments
