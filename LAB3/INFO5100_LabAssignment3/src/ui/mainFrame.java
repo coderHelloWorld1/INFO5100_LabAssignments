@@ -127,6 +127,11 @@ public class mainFrame extends javax.swing.JFrame {
         submitButton.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         submitButton.setForeground(new java.awt.Color(255, 255, 255));
         submitButton.setText("SUBMIT");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         imageLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         imageLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -298,6 +303,56 @@ public class mainFrame extends javax.swing.JFrame {
             }            
         }
     }//GEN-LAST:event_emailFieldFocusLost
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        // TODO add your handling code here:
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String age = ageField.getText();
+        String email = emailField.getText();
+        String message = messageField.getText();
+        
+        String[] C= new String[4];
+        int[] i = {0,0,0,0};
+        if(firstName.length()==0){
+            C[0]="First Name ";
+            i[0]=1;
+        }
+        if(lastName.length()==0){
+           C[1]="Last Name ";
+           i[1]=1;
+        }
+        if(age.length()==0){
+            C[2]="Age ";
+            i[2]=1;
+        }
+        if(email.length()==0){
+           C[3]="Email ";
+           i[3]=1;
+        }
+        int z;
+        String st= "";
+        for(z=0; z<4; z++){
+            if(i[z]==1){
+                st += C[z];
+                    if(z < C.length - 1) {
+                        st += ", ";
+                    }
+            }
+        }
+        System.out.println(st);     
+        if(st.length()==0){
+            JOptionPane.showMessageDialog(this, "Hurray, Form Sumbitted! \n First Name is "+firstName+" \n Last Name is "+lastName+" \n Age is "+age+" \n Email is "+email+" \n Message is "+message, "Form Submitted", HEIGHT); // Found a non-numeric character 
+            firstNameField.setText("");
+            lastNameField.setText("");
+            ageField.setText("");
+            emailField.setText("");
+            messageField.setText("");
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please Fill Out Remaning Values: "+st, "Enter All Values", HEIGHT); // Found a non-numeric character 
+        }
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
      * @param args the command line arguments
