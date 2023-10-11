@@ -31,6 +31,7 @@ public class MainFrame extends javax.swing.JFrame {
         topPanel = new javax.swing.JPanel();
         TopLabel = new javax.swing.JLabel();
         bottomPanel = new javax.swing.JPanel();
+        bottomLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(700, 800));
@@ -71,17 +72,12 @@ public class MainFrame extends javax.swing.JFrame {
         splitPane.setTopComponent(topPanel);
 
         bottomPanel.setMinimumSize(new java.awt.Dimension(700, 600));
+        bottomPanel.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout bottomPanelLayout = new javax.swing.GroupLayout(bottomPanel);
-        bottomPanel.setLayout(bottomPanelLayout);
-        bottomPanelLayout.setHorizontalGroup(
-            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
-        );
-        bottomPanelLayout.setVerticalGroup(
-            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
+        bottomLabel.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        bottomLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bottomLabel.setText("Please select one option! ");
+        bottomPanel.add(bottomLabel, "card2");
 
         splitPane.setRightComponent(bottomPanel);
 
@@ -147,6 +143,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TopLabel;
+    private javax.swing.JLabel bottomLabel;
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JSplitPane splitPane;
