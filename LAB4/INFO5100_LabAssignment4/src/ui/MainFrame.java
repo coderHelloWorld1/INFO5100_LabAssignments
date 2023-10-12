@@ -31,6 +31,7 @@ public class MainFrame extends javax.swing.JFrame {
         topPanel = new javax.swing.JPanel();
         TopLabel = new javax.swing.JLabel();
         RegistrationButton = new javax.swing.JButton();
+        ViewButton = new javax.swing.JButton();
         bottomPanel = new javax.swing.JPanel();
         bottomLabel = new javax.swing.JLabel();
 
@@ -61,18 +62,27 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        ViewButton.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        ViewButton.setText("View");
+        ViewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ViewButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topPanelLayout.createSequentialGroup()
                 .addContainerGap(157, Short.MAX_VALUE)
-                .addComponent(TopLabel)
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(TopLabel)
+                    .addGroup(topPanelLayout.createSequentialGroup()
+                        .addComponent(RegistrationButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ViewButton)))
                 .addContainerGap(158, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(RegistrationButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,7 +90,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(TopLabel)
                 .addGap(18, 18, 18)
-                .addComponent(RegistrationButton)
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RegistrationButton)
+                    .addComponent(ViewButton))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
@@ -129,6 +141,15 @@ public class MainFrame extends javax.swing.JFrame {
         lay.next(bottomPanel);
     }//GEN-LAST:event_RegistrationButtonActionPerformed
 
+    private void ViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewButtonActionPerformed
+        // TODO add your handling code here:
+        ViewPanel rpa = new ViewPanel(null);
+        bottomPanel.add(rpa);
+        //jSplitPane1.setBottomComponent(reg);
+        CardLayout lay = (CardLayout)bottomPanel.getLayout();
+        lay.next(bottomPanel);
+    }//GEN-LAST:event_ViewButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -167,6 +188,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton RegistrationButton;
     private javax.swing.JLabel TopLabel;
+    private javax.swing.JButton ViewButton;
     private javax.swing.JLabel bottomLabel;
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel mainPanel;
