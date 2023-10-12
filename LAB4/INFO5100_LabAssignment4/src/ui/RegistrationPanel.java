@@ -3,7 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package ui;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
+import model.patientModel;
 /**
  *
  * @author Purvam Sheth
@@ -13,8 +23,10 @@ public class RegistrationPanel extends javax.swing.JPanel {
     /**
      * Creates new form RegistrationPanel
      */
-    public RegistrationPanel() {
+    private JPanel bottomPanel;
+    public RegistrationPanel(JPanel bottompanel) {
         initComponents();
+        this.bottomPanel = bottomPanel;
     }
 
     /**
@@ -26,19 +38,473 @@ public class RegistrationPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        genderButtonGroup = new javax.swing.ButtonGroup();
+        titleLable = new javax.swing.JLabel();
+        firstNameLabel = new javax.swing.JLabel();
+        firstNameField = new javax.swing.JTextField();
+        lastNameLabel = new javax.swing.JLabel();
+        lastNameField = new javax.swing.JTextField();
+        ageLabel = new javax.swing.JLabel();
+        genderLabel = new javax.swing.JLabel();
+        ageField = new javax.swing.JTextField();
+        emailLabel = new javax.swing.JLabel();
+        emailField = new javax.swing.JTextField();
+        textLabel = new javax.swing.JLabel();
+        scrollPane = new javax.swing.JScrollPane();
+        messageField = new javax.swing.JTextArea();
+        typeLabel = new javax.swing.JLabel();
+        typePatent = new javax.swing.JComboBox<>();
+        imageLabel = new javax.swing.JLabel();
+        imageButton = new javax.swing.JButton();
+        submitButton = new javax.swing.JButton();
+        maleButton = new javax.swing.JRadioButton();
+        femaleButton = new javax.swing.JRadioButton();
+        imageViewLabel = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(242, 98, 129));
+        setMinimumSize(new java.awt.Dimension(700, 600));
+
+        titleLable.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        titleLable.setForeground(new java.awt.Color(255, 255, 255));
+        titleLable.setText("Patient Registration Form");
+
+        firstNameLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        firstNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        firstNameLabel.setText("First Name");
+
+        firstNameField.setBackground(new java.awt.Color(242, 98, 129));
+        firstNameField.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        firstNameField.setForeground(new java.awt.Color(255, 255, 255));
+        firstNameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                firstNameFieldKeyReleased(evt);
+            }
+        });
+
+        lastNameLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lastNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        lastNameLabel.setText("Last Name");
+
+        lastNameField.setBackground(new java.awt.Color(242, 98, 129));
+        lastNameField.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lastNameField.setForeground(new java.awt.Color(255, 255, 255));
+        lastNameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                lastNameFieldKeyReleased(evt);
+            }
+        });
+
+        ageLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        ageLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ageLabel.setText("Age");
+
+        genderLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        genderLabel.setForeground(new java.awt.Color(255, 255, 255));
+        genderLabel.setText("Gender");
+
+        ageField.setBackground(new java.awt.Color(242, 98, 129));
+        ageField.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        ageField.setForeground(new java.awt.Color(255, 255, 255));
+        ageField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ageFieldFocusLost(evt);
+            }
+        });
+        ageField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ageFieldKeyReleased(evt);
+            }
+        });
+
+        emailLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        emailLabel.setForeground(new java.awt.Color(255, 255, 255));
+        emailLabel.setText("Email ID");
+
+        emailField.setBackground(new java.awt.Color(242, 98, 129));
+        emailField.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        emailField.setForeground(new java.awt.Color(255, 255, 255));
+        emailField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailFieldFocusLost(evt);
+            }
+        });
+
+        textLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        textLabel.setForeground(new java.awt.Color(255, 255, 255));
+        textLabel.setText("Message");
+
+        messageField.setBackground(new java.awt.Color(242, 98, 129));
+        messageField.setColumns(20);
+        messageField.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        messageField.setForeground(new java.awt.Color(255, 255, 255));
+        messageField.setRows(5);
+        scrollPane.setViewportView(messageField);
+
+        typeLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        typeLabel.setForeground(new java.awt.Color(255, 255, 255));
+        typeLabel.setText("Type of Patient");
+
+        typePatent.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "REGULAR", "VIP", "OTHER" }));
+        typePatent.setSelectedIndex(-1);
+        typePatent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typePatentActionPerformed(evt);
+            }
+        });
+
+        imageLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        imageLabel.setForeground(new java.awt.Color(255, 255, 255));
+        imageLabel.setText("Upload Image");
+
+        imageButton.setBackground(new java.awt.Color(153, 153, 153));
+        imageButton.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        imageButton.setForeground(new java.awt.Color(255, 255, 255));
+        imageButton.setText("Upload Image");
+        imageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imageButtonActionPerformed(evt);
+            }
+        });
+
+        submitButton.setBackground(new java.awt.Color(255, 110, 66));
+        submitButton.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        submitButton.setForeground(new java.awt.Color(255, 255, 255));
+        submitButton.setText("SUBMIT");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
+
+        genderButtonGroup.add(maleButton);
+        maleButton.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        maleButton.setForeground(new java.awt.Color(255, 255, 255));
+        maleButton.setText("Male");
+        maleButton.setActionCommand("Male User");
+        maleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maleButtonActionPerformed(evt);
+            }
+        });
+
+        genderButtonGroup.add(femaleButton);
+        femaleButton.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        femaleButton.setForeground(new java.awt.Color(255, 255, 255));
+        femaleButton.setText("Female");
+        femaleButton.setActionCommand("Female User"); // NOI18N
+        femaleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                femaleButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(ageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(ageField))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(lastNameField)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(typeLabel)
+                            .addComponent(imageLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imageButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(imageViewLabel))
+                            .addComponent(typePatent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(genderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(femaleButton)
+                            .addComponent(maleButton)))
+                    .addComponent(titleLable))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(titleLable, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(textLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(genderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maleButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(femaleButton)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(typeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(typePatent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(imageLabel)
+                    .addComponent(imageButton)
+                    .addComponent(imageViewLabel))
+                .addGap(56, 56, 56)
+                .addComponent(submitButton)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void firstNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameFieldKeyReleased
+        // TODO add your handling code here:
+        String Name = firstNameField.getText();
+        for (char c : Name.toCharArray()) {
+            System.out.println(c);
+            if (Character.isDigit(c)) {
+                firstNameField.setText("");
+                JOptionPane.showMessageDialog(this, "No Digits are allowded", "Enter Correct Name", HEIGHT);
+            }
+        }
+    }//GEN-LAST:event_firstNameFieldKeyReleased
+
+    private void lastNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lastNameFieldKeyReleased
+        // TODO add your handling code here:
+        String Name = lastNameField.getText();
+        for (char c : Name.toCharArray()) {
+            System.out.println(c);
+            if (Character.isDigit(c)) {
+                lastNameField.setText("");
+                JOptionPane.showMessageDialog(this, "No Digits are allowded", "Enter Correct Name", HEIGHT);
+            }
+        }
+    }//GEN-LAST:event_lastNameFieldKeyReleased
+
+    private void ageFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ageFieldFocusLost
+        // TODO add your handling code here:
+        String age = ageField.getText();
+        String d = "d";
+        int number;
+        if(age.equals(d)){
+            ageField.setText("");
+        }
+        if((age.length()>=1)){
+            if(age.equals(d)){
+                number=0;
+            }
+            else{
+                number = Integer.parseInt(age);
+            }
+            if((!(number >= 10 && number <= 99))){
+                System.out.println(age);
+                ageField.setText("");
+                if(!(age.equals(d))){
+                    JOptionPane.showMessageDialog(this, "Please Enter age between 10-99", "Enter Correct Age", HEIGHT);
+                }
+            }
+        }
+    }//GEN-LAST:event_ageFieldFocusLost
+
+    private void ageFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageFieldKeyReleased
+        // TODO add your handling code here:
+        String age = ageField.getText();
+        for (char c : age.toCharArray()) {
+            System.out.println(c);
+            if (!Character.isDigit(c)) {
+                ageField.setText("d");
+                JOptionPane.showMessageDialog(this, "Please Enter Digits Only", "Enter Correct Age", HEIGHT);
+            }
+        }
+    }//GEN-LAST:event_ageFieldKeyReleased
+
+    private void emailFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusLost
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        String email = emailField.getText();
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if(!(email.length()==0)){
+            if(!(matcher.matches())){
+                emailField.setText("");
+                JOptionPane.showMessageDialog(this, "Please Enter Valid Email", "Enter Correct Email", HEIGHT);
+            }
+        }
+    }//GEN-LAST:event_emailFieldFocusLost
+
+    private void typePatentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typePatentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typePatentActionPerformed
+
+    private void imageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imageButtonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser file = new JFileChooser();
+        if (file.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            try {
+                BufferedImage img = ImageIO.read(file.getSelectedFile());
+                Image edited_image = img.getScaledInstance(60, 80, Image.SCALE_SMOOTH);
+                if (edited_image != null) {
+                    imageViewLabel.setIcon(new ImageIcon(edited_image));
+                } else {
+                    imageViewLabel.setText("Enter Valid Image! ");
+                    throw new Exception();
+                }
+            } catch (Exception ex) {
+            }
+        }
+    }//GEN-LAST:event_imageButtonActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        // TODO add your handling code here:
+        patientModel pat = new patientModel();
+        pat.setFirstName(firstNameField.getText());
+        pat.setLastName(lastNameField.getText());
+        pat.setAge(ageField.getText());
+        pat.setEmail(emailField.getText());
+        pat.setMessage(messageField.getText());
+        pat.setImage(imageViewLabel.getIcon());
+        if(genderButtonGroup.getSelection()!=null){
+            pat.setGender(genderButtonGroup.getSelection().getActionCommand());
+        }
+        else{
+            pat.setGender("");
+        }
+
+        if(typePatent.getSelectedItem()!=null){
+            pat.setTypeOfPatient(typePatent.getSelectedItem().toString());
+        }
+        else{
+            pat.setTypeOfPatient("");
+        }
+
+        String[] C= new String[8];
+        int[] i = {0,0,0,0,0,0,0,0};
+        if(pat.getFirstName().length()==0){
+            C[0]="First Name ";
+            i[0]=1;
+        }
+        if(pat.getLastName().length()==0){
+            C[1]="Last Name ";
+            i[1]=1;
+        }
+        if(pat.getAge().length()==0){
+            C[2]="Age ";
+            i[2]=1;
+        }
+        if(pat.getEmail().length()==0){
+            C[3]="Email ";
+            i[3]=1;
+        }
+        if(pat.getMessage().length()==0){
+            C[4]="Message ";
+            i[4]=1;
+        }
+        if(pat.getGender().length()==0){
+            C[5]="Gender ";
+            i[5]=1;
+        }
+        if(pat.getTypeOfPatient().length()==0){
+            C[6]="Type of Patient ";
+            i[6]=1;
+        }
+        if(pat.getImage() == null){
+            C[7]="Image ";
+            i[7]=1;
+        }
+        int z;
+        String st= "";
+        for(z=0; z<8; z++){
+            if(i[z]==1){
+                st += C[z];
+                if(z < C.length - 1) {
+                    st += ", ";
+                }
+            }
+        }
+        System.out.println(st);
+        if(st.length()==0){
+            imageViewLabel.setIcon(pat.getImage());
+            JOptionPane.showMessageDialog(this, "Hurray, Form Sumbitted! \n First Name is "+pat.getFirstName()+" \n Last Name is "+pat.getLastName()+" \n Age is "+pat.getAge()+" \n Email is "+pat.getEmail()+" \n Message is "+pat.getMessage()+"\n Gender is "+pat.getGender()+"\n Type of Patient is "+pat.getTypeOfPatient(), "Form Submitted", HEIGHT);
+            firstNameField.setText("");
+            lastNameField.setText("");
+            ageField.setText("");
+            emailField.setText("");
+            messageField.setText("");
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please Fill Out Remaning Values: "+st, "Enter All Values", HEIGHT);
+        }
+    }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void maleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maleButtonActionPerformed
+
+    private void femaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_femaleButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ageField;
+    private javax.swing.JLabel ageLabel;
+    private javax.swing.JTextField emailField;
+    private javax.swing.JLabel emailLabel;
+    private javax.swing.JRadioButton femaleButton;
+    private javax.swing.JTextField firstNameField;
+    private javax.swing.JLabel firstNameLabel;
+    private javax.swing.ButtonGroup genderButtonGroup;
+    private javax.swing.JLabel genderLabel;
+    private javax.swing.JButton imageButton;
+    private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel imageViewLabel;
+    private javax.swing.JTextField lastNameField;
+    private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JRadioButton maleButton;
+    private javax.swing.JTextArea messageField;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JButton submitButton;
+    private javax.swing.JLabel textLabel;
+    private javax.swing.JLabel titleLable;
+    private javax.swing.JLabel typeLabel;
+    private javax.swing.JComboBox<String> typePatent;
     // End of variables declaration//GEN-END:variables
 }
