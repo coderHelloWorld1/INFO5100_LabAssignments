@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package ui;
+import java.awt.CardLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.regex.Pattern;
@@ -24,7 +25,7 @@ public class RegistrationPanel extends javax.swing.JPanel {
      * Creates new form RegistrationPanel
      */
     private JPanel bottomPanel;
-    public RegistrationPanel(JPanel bottompanel) {
+    public RegistrationPanel(JPanel bottomPanel) {
         initComponents();
         this.bottomPanel = bottomPanel;
     }
@@ -463,6 +464,12 @@ public class RegistrationPanel extends javax.swing.JPanel {
         if(st.length()==0){
             imageViewLabel.setIcon(pat.getImage());
             JOptionPane.showMessageDialog(this, "Hurray, Form Sumbitted! \n First Name is "+pat.getFirstName()+" \n Last Name is "+pat.getLastName()+" \n Age is "+pat.getAge()+" \n Email is "+pat.getEmail()+" \n Message is "+pat.getMessage()+"\n Gender is "+pat.getGender()+"\n Type of Patient is "+pat.getTypeOfPatient(), "Form Submitted", HEIGHT);
+            
+            ViewPanel pan = new ViewPanel(pat);
+            bottomPanel.add(pan);
+            CardLayout lay = (CardLayout)bottomPanel.getLayout();
+            lay.next(bottomPanel);
+            
             firstNameField.setText("");
             lastNameField.setText("");
             ageField.setText("");
