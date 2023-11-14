@@ -411,7 +411,16 @@ public class ViewPanel extends javax.swing.JPanel {
 
     private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
         // TODO add your handling code here:
-
+        MessageFormat header = new MessageFormat("User Details");
+        MessageFormat footer = new MessageFormat("Created by P.S");
+        try{
+            PrintRequestAttributeSet set= new HashPrintRequestAttributeSet();
+            set.add(OrientationRequested.LANDSCAPE);
+            viewTable.print(JTable.PrintMode.FIT_WIDTH, header, footer, true, set, true);
+            JOptionPane.showMessageDialog(this, "Printed Successfully");   
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "\n Failed \n" + e);
+        }
     }//GEN-LAST:event_printButtonActionPerformed
 
 
