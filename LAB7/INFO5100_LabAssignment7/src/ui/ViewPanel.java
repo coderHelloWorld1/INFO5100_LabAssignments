@@ -3,11 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package ui;
-import java.awt.CardLayout;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import model.User;
 import util.DatabaseConnector;
@@ -15,15 +21,16 @@ import util.DatabaseConnector;
  *
  * @author Purvam Sheth
  */
-public class RegistrationPanel extends javax.swing.JPanel {
+public class ViewPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form RegistrationPanel
+     * Creates new form ViewPanel
      */
-    private JPanel bottomPanel;
-    public RegistrationPanel(JPanel bottomPanel) {
+    User user;
+    ArrayList<User> users;
+    public ViewPanel() {
         initComponents();
-        this.bottomPanel = bottomPanel;
+        populateFields();
     }
 
     /**
@@ -36,6 +43,10 @@ public class RegistrationPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         titleLable = new javax.swing.JLabel();
+        scrollPane = new javax.swing.JScrollPane();
+        viewTable = new javax.swing.JTable();
+        printButton = new javax.swing.JButton();
+        submitButton = new javax.swing.JButton();
         legalNameLabel = new javax.swing.JLabel();
         legalNameField = new javax.swing.JTextField();
         userNameLabel = new javax.swing.JLabel();
@@ -44,15 +55,55 @@ public class RegistrationPanel extends javax.swing.JPanel {
         phoneField = new javax.swing.JTextField();
         emailLabel = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
-        submitButton = new javax.swing.JButton();
-        imageViewLabel = new javax.swing.JLabel();
+        deleteButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(242, 98, 129));
         setMinimumSize(new java.awt.Dimension(700, 600));
 
         titleLable.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         titleLable.setForeground(new java.awt.Color(255, 255, 255));
-        titleLable.setText("Patient Registration Form");
+        titleLable.setText("Customer View/Edit Form");
+
+        viewTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "LEGAL NAME", "USER NAME", "EMAIL ID", "PHONE"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        viewTable.getTableHeader().setReorderingAllowed(false);
+        scrollPane.setViewportView(viewTable);
+
+        printButton.setText("PRINT");
+        printButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printButtonActionPerformed(evt);
+            }
+        });
+
+        submitButton.setText("SUBMIT");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         legalNameLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         legalNameLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -111,13 +162,17 @@ public class RegistrationPanel extends javax.swing.JPanel {
             }
         });
 
-        submitButton.setBackground(new java.awt.Color(255, 110, 66));
-        submitButton.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        submitButton.setForeground(new java.awt.Color(255, 255, 255));
-        submitButton.setText("SUBMIT");
-        submitButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setText("DELETE");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButtonActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        updateButton.setText("UPDATE");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
             }
         });
 
@@ -125,43 +180,55 @@ public class RegistrationPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(printButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(updateButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(submitButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(142, Short.MAX_VALUE)
+                .addContainerGap(124, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+                            .addComponent(emailField))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(phoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(phoneField))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(userNameField)))
+                            .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(legalNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(legalNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(224, 224, 224)
-                        .addComponent(imageViewLabel))
-                    .addComponent(titleLable))
-                .addContainerGap(142, Short.MAX_VALUE))
+                    .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(124, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(titleLable)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(titleLable, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(legalNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(legalNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -173,13 +240,20 @@ public class RegistrationPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(210, 210, 210)
-                .addComponent(imageViewLabel)
-                .addGap(56, 56, 56)
-                .addComponent(submitButton)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitButton)
+                    .addComponent(printButton)
+                    .addComponent(deleteButton)
+                    .addComponent(updateButton))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     private void legalNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_legalNameFieldKeyReleased
         // TODO add your handling code here:
@@ -192,6 +266,18 @@ public class RegistrationPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_legalNameFieldKeyReleased
+
+    private void phoneFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneFieldFocusLost
+        // TODO add your handling code here:
+        String phoneNumber = phoneField.getText();
+        if(phoneNumber.length()>0){
+            boolean isval = isValidPhoneNumber(phoneNumber);
+            if(!isval){
+                phoneField.setText("");
+                    JOptionPane.showMessageDialog(this, "Please Enter 10 Digits Mobile Number", "Enter Correct Mbile Number", HEIGHT);
+            }        
+        }
+    }//GEN-LAST:event_phoneFieldFocusLost
 
     private void emailFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusLost
         // TODO add your handling code here:
@@ -208,75 +294,14 @@ public class RegistrationPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_emailFieldFocusLost
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-        User pat = new User();
-        pat.setLegalName(legalNameField.getText());
-        pat.setUserName(userNameField.getText());
-        pat.setPhoneNumber(phoneField.getText());
-        pat.setEmailId(emailField.getText());
 
-        String[] C= new String[4];
-        int[] i = {0,0,0,0};
-        if(pat.getLegalName().length()==0){
-            C[0]="Legal Name ";
-            i[0]=1;
-        }
-        if(pat.getUserName().length()==0){
-            C[1]="User Name ";
-            i[1]=1;
-        }
-        if(pat.getPhoneNumber().length()==0){
-            C[2]="Phone Number ";
-            i[2]=1;
-        }
-        if(pat.getEmailId().length()==0){
-            C[3]="Email ";
-            i[3]=1;
-        }
-        
-        int z;
-        String st= "";
-        for(z=0; z<4; z++){
-            if(i[z]==1){
-                st += C[z];
-                if(z < C.length - 1) {
-                    st += ", ";
-                }
-            }
-        }
-        System.out.println(st);
-        if(st.length()==0){
-            JOptionPane.showMessageDialog(this, "Hurray, Form Sumbitted! \n Legal Name is "+pat.getLegalName()+" \n User Name is "+pat.getUserName()+" \n Phone Number is "+pat.getPhoneNumber()+" \n Email is "+pat.getEmailId(), "Form Submitted", HEIGHT);
-            
-            DatabaseConnector.addUser(pat);
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
-            ViewPanel pan = new ViewPanel();
-            bottomPanel.add(pan);
-            CardLayout lay = (CardLayout)bottomPanel.getLayout();
-            lay.next(bottomPanel);            
-            
-            legalNameField.setText("");
-            userNameField.setText("");
-            phoneField.setText("");
-            emailField.setText("");
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Please Fill Out Remaning Values: "+st, "Enter All Values", HEIGHT);
-        }
-    }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void phoneFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneFieldFocusLost
-        // TODO add your handling code here:
-        String phoneNumber = phoneField.getText();
-        if(phoneNumber.length()>0){
-            boolean isval = isValidPhoneNumber(phoneNumber);
-            if(!isval){
-                phoneField.setText("");
-                    JOptionPane.showMessageDialog(this, "Please Enter 10 Digits Mobile Number", "Enter Correct Mobile Number", HEIGHT);
-            }        
-        }
-    }//GEN-LAST:event_phoneFieldFocusLost
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     private void legalNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_legalNameFieldFocusLost
         // TODO add your handling code here:
@@ -284,7 +309,7 @@ public class RegistrationPanel extends javax.swing.JPanel {
         if(Name.length()>0){
             if(Name.length()<2){
                 legalNameField.setText("");
-                JOptionPane.showMessageDialog(this, "Too Small Name (Atleast 2 Letters!)", "Enter Correct Name", HEIGHT);            
+                JOptionPane.showMessageDialog(this, "Too Small Name", "Enter Correct Name", HEIGHT);            
             }
         }
     }//GEN-LAST:event_legalNameFieldFocusLost
@@ -295,27 +320,66 @@ public class RegistrationPanel extends javax.swing.JPanel {
         if(Name.length()>0){
             if(Name.length()<4){
                 userNameField.setText("");
-                JOptionPane.showMessageDialog(this, "Minimum 4 Character/Digits are Required", "Enter Correct User Name", HEIGHT);            
+                JOptionPane.showMessageDialog(this, "Minimum 4 Character/Digits are Required", "Enter Correct Name", HEIGHT);            
             }        
         }
     }//GEN-LAST:event_userNameFieldFocusLost
 
-    public static boolean isValidPhoneNumber(String phoneNumber){
-        String cleaned = phoneNumber.replaceAll("[^0-9]", "");
-        return cleaned.length()==10;
-    }
+    private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_printButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton deleteButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
-    private javax.swing.JLabel imageViewLabel;
     private javax.swing.JTextField legalNameField;
     private javax.swing.JLabel legalNameLabel;
     private javax.swing.JTextField phoneField;
     private javax.swing.JLabel phoneLabel;
+    private javax.swing.JButton printButton;
+    private javax.swing.JScrollPane scrollPane;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel titleLable;
+    private javax.swing.JButton updateButton;
     private javax.swing.JTextField userNameField;
     private javax.swing.JLabel userNameLabel;
+    private javax.swing.JTable viewTable;
     // End of variables declaration//GEN-END:variables
+
+    private void populateFields() {
+        System.out.println("Hello world from View Panel! ");
+        try{
+            this.users = DatabaseConnector.getAllusers();
+            DefaultTableModel table = (DefaultTableModel) viewTable.getModel();
+            table.setRowCount(0);
+            for(User u: users){
+                Object[] row = new Object[5];
+                row[0] = u.getId();
+                row[1] = u.getLegalName();
+                row[2] = u.getUserName();
+                row[3] = u.getEmailId();
+                row[4] = u.getPhoneNumber();
+                table.addRow(row);
+            }
+                                    
+            legalNameField.setText("");
+            userNameField.setText("");
+            phoneField.setText("");
+            emailField.setText("");
+            legalNameField.setEditable(false);
+            userNameField.setEditable(false);
+            phoneField.setEditable(false);
+            emailField.setEditable(false);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }    
+    }
+    
+    public static boolean isValidPhoneNumber(String phoneNumber){
+        String cleaned = phoneNumber.replaceAll("[^0-9]", "");
+        return cleaned.length()==10;
+    }
 }

@@ -143,7 +143,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void ViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewButtonActionPerformed
         // TODO add your handling code here:
-
+        ViewPanel rpa = new ViewPanel();
+        bottomPanel.add(rpa);
+        //jSplitPane1.setBottomComponent(reg);
+        CardLayout lay = (CardLayout)bottomPanel.getLayout();
+        lay.next(bottomPanel);
     }//GEN-LAST:event_ViewButtonActionPerformed
 
     /**
