@@ -252,7 +252,60 @@ public class ViewPanel extends javax.swing.JPanel {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
+        User pat = new User();
+        pat.setLegalName(legalNameField.getText());
+        pat.setUserName(userNameField.getText());
+        pat.setPhoneNumber(phoneField.getText());
+        pat.setEmailId(emailField.getText());
 
+        String[] C= new String[4];
+        int[] i = {0,0,0,0};
+        if(pat.getLegalName().length()==0){
+            C[0]="Legal Name ";
+            i[0]=1;
+        }
+        if(pat.getUserName().length()==0){
+            C[1]="User Name ";
+            i[1]=1;
+        }
+        if(pat.getPhoneNumber().length()==0){
+            C[2]="Phone Number ";
+            i[2]=1;
+        }
+        if(pat.getEmailId().length()==0){
+            C[3]="Email ";
+            i[3]=1;
+        }
+        
+        int z;
+        String st= "";
+        for(z=0; z<4; z++){
+            if(i[z]==1){
+                st += C[z];
+                if(z < C.length - 1) {
+                    st += ", ";
+                }
+            }
+        }
+        System.out.println(st);
+        if(st.length()==0){
+            JOptionPane.showMessageDialog(this, "Hurray, Form Updated! \n Legal Name is "+pat.getLegalName()+" \n User Name is "+pat.getUserName()+" \n Phone Number is "+pat.getPhoneNumber()+" \n Email is "+pat.getEmailId(), "Form Submitted", HEIGHT);
+            
+            int selectedIndex = viewTable.getSelectedRow();
+            if(selectedIndex == -1){
+                JOptionPane.showMessageDialog(this, "Please Select a user to update", "Cannot update user", HEIGHT);
+            }
+            try{
+                User selectedUser = users.get(selectedIndex);
+                DatabaseConnector.editUser(selectedUser, pat);
+                populateFields();
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Exception occoured!", "Cannot update user", HEIGHT);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please Fill Out Remaning Values: "+st, "Enter All Values", HEIGHT);
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void legalNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_legalNameFieldKeyReleased
@@ -311,7 +364,27 @@ public class ViewPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here:  
+        int selectedIndex = viewTable.getSelectedRow();
+        if(selectedIndex == -1){
+            JOptionPane.showMessageDialog(this, "Please Select a user to update", "Cannot update user", HEIGHT);
+        }
+        try{
+            User selectedUser = users.get(selectedIndex);
+            legalNameField.setEditable(true);
+            userNameField.setEditable(true);
+            phoneField.setEditable(true);
+            emailField.setEditable(true);
+            legalNameField.setText(selectedUser.getLegalName());
+            userNameField.setText(selectedUser.getUserName());
+            phoneField.setText(selectedUser.getPhoneNumber());
+            emailField.setText(selectedUser.getEmailId());
+            //DatabaseConnector.deleteUser(selectedUser);
+            //JOptionPane.showMessageDialog(this, "User Delete", "Sucessfull", HEIGHT);  
+            //populateFields();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Cannot Update user", HEIGHT);                
+        }        
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void legalNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_legalNameFieldFocusLost
