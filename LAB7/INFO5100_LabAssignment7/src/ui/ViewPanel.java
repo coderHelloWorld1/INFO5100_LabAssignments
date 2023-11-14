@@ -296,7 +296,18 @@ public class ViewPanel extends javax.swing.JPanel {
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-
+        int selectedIndex = viewTable.getSelectedRow();
+        if(selectedIndex == -1){
+            JOptionPane.showMessageDialog(this, "Please Select a user to delete", "Cannot delete user", HEIGHT);
+        }
+        try{
+            User selectedUser = users.get(selectedIndex);
+            DatabaseConnector.deleteUser(selectedUser);
+            JOptionPane.showMessageDialog(this, "User Delete", "Sucessfull", HEIGHT);  
+            populateFields();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Cannot delete user", HEIGHT);                
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
